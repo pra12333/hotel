@@ -8,6 +8,18 @@
 </head>
 <body class="min-h-screen bg-cover bg-center flex items-center justify-center" style="background-image: url('{{ asset('storage/images/hotel.jpg') }}');">
     <div class="w-full max-w-md bg-white bg-opacity-90 rounded-lg shadow-lg p-8">
+        <!-- Flash Messages Inside the Form Container -->
+        @if(session('success'))
+            <div class="bg-green-500 text-white p-3 rounded text-center mb-4">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="bg-red-500 text-white p-3 rounded text-center mb-4">
+                {{ session('error') }}
+            </div>
+        @endif
         <h2 class="text-3xl font-extrabold text-gray-900 text-center mb-6">Welcome Back!</h2>
         <p class="text-gray-600 text-center mb-8">Sign in to your account</p>
         <form method="POST" action="{{route('login')}}">
@@ -34,10 +46,19 @@
                 class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                 Sign In
             </button>
+            @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
         </form>
         <p class="mt-6 text-center text-gray-600">
             Don't have an account?
-            <a href="#" class="text-indigo-600 font-medium hover:underline">Sign up</a>
+            <a href="{{route('showregister')}}" class="text-indigo-600 font-medium hover:underline">Sign up</a>
         </p>
     </div>
 </body>

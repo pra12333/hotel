@@ -10,7 +10,7 @@
     <div class="w-full max-w-lg bg-white bg-opacity-90 rounded-lg shadow-lg p-8">
         <h2 class="text-4xl font-extrabold text-gray-900 text-center mb-6">Create Your Account</h2>
         <p class="text-gray-600 text-center mb-8">Fill in the details to register</p>
-        <form action="{{route('register')}}" method="POST">
+        <form action="{{ route('register') }}" method="POST" onsubmit="console.log('Submitting to:', this.action)">
             @csrf 
             <!-- Name Field -->
             <div class="mb-4">
@@ -50,7 +50,7 @@
         <!-- Already have an account -->
         <p class="mt-6 text-center text-gray-600">
             Already have an account?
-            <a href="#" class="text-indigo-600 font-medium hover:underline">Sign in</a>
+            <a href="{{route('login')}}" class="text-indigo-600 font-medium hover:underline">Sign in</a>
         </p>
     </div>
 </body>

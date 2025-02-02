@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use App\Mail\PasswordSetupMail;
 use Illuminate\Support\Facades\Auth;
+use App\Models\RecentActivity;
 
 class AuthController extends Controller
 {
@@ -20,6 +21,7 @@ class AuthController extends Controller
     // Handle the registration form submission
     public function signup(Request $request)
     {
+        // Log::info('Signup Request:', $request->all());
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
@@ -40,7 +42,7 @@ class AuthController extends Controller
         // Send the password setup email
         $this->sendPasswordSetupEmail($user);
 
-        return back()->with('success', 'A link to set your password has been sent to your email.');
+        return redirect()->route('login')->with('success', 'A link to set your password has been sent to your email.');
     }
 
     protected function sendPasswordSetupEmail(User $user)
@@ -83,6 +85,7 @@ public function setPassword(Request $request)
     return view('login');
    }
       public function login(Request $request) {
+        \Log::info('Request data:', $request->all());
         // Validate the input
     $request->validate([
         'email' => 'required|email',
@@ -94,13 +97,51 @@ public function setPassword(Request $request)
         // Regenerate the session to prevent session fixation
         $request->session()->regenerate();
 
-        // Redirect to the intended page or fallback to the dashboard
-        return redirect()->intended('dashboard');
+        // log the activity in the database
+        RecentActivity::create([
+            'user_id' => Auth::id(),
+            'activity_type' =>'login',
+            'description' => 'User logged in'
+        ]);
+
+        // check user role and redirect accordingly
+        if(Auth::user()->role === 'admin') {
+            return redirect()->route('admin'); // redirect admin to the dashboard
+        }else{
+            return redirect()->route('homepage'); // redirect the normal user to homepage
+        }
+
     }
+
+    \Log::info('Activity Logged:',[
+        'user_id' => Auth::id(),
+        'activity_type' => 'login',
+        'description' => 'User logged in',
+    ]);
 
     // If authentication fails, redirect back with an error message
     return back()->withErrors([
         'email' => 'The provided credentials do not match our records.',
     ])->withInput($request->only('email', 'remember-me'));
+      }
+
+      public function logout(Request $request) {
+        RecentActivity::create([
+            'user_id' => Auth::id(),
+            'activity_type' => 'login',
+            'description' => 'User logged out'
+        ]);
+        // log out the user
+        Auth::logout();
+
+        // Invalidate the session
+        $request->session()->invalidate();
+
+        // regenerate session token for security
+        $request->session()->regenerateToken();
+
+
+        // redirect to the login page
+        return redirect ('/login')->with('success','You have beein logged out successfully');
       }
 }

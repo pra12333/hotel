@@ -46,4 +46,20 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function hasPendingPayment()
+{
+    return Booking::where('user_id', $this->id)
+                  ->where('payment_status', 'pending') // Adjust based on your booking status values
+                  ->exists();
+}
+public function recentActivities()
+{
+    return $this->hasMany(recentActivity::class);
+}
+
+public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
 }

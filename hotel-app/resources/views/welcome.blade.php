@@ -19,7 +19,7 @@
     <a href="{{route('login')}}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300">
         Login
     </a>
-    <a href="{{ route('register') }}" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition duration-300">
+    <a href="{{ route('showregister') }}" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition duration-300">
     Signup
 </a>
 
@@ -43,12 +43,12 @@
     </div>
    
             <ul class="flex space-x-6">
-                <li><a href="#" class="hover:text-blue-300">Home</a></li>
+                <!-- <li><a href="#" class="hover:text-blue-300">Home</a></li>
                 <li><a href="#" class="hover:text-blue-300">About</a></li>
                 <li><a href="#" class="hover:text-blue-300">Services</a></li>
                 <li><a href="#" class="hover:text-blue-300">Rooms</a></li>
                 <li><a href="#" class="hover:text-blue-300">Gallery</a></li>
-                <li><a href="#" class="hover:text-blue-300">Contact</a></li>
+                <li><a href="#" class="hover:text-blue-300">Contact</a></li> -->
             </ul>
         </div>
     </nav>
@@ -61,14 +61,14 @@
                 <div class="text-center text-white">
                     <h1 class="text-5xl font-bold mb-4">Welcome to eHotel</h1>
                     <p class="text-2xl mb-6">Luxury Living</p>
-                    <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full">
+                    <a href="{{route('showregister')}}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full">
                         Get Started →
                     </a>
                 </div>
             </div>
             <!-- Slide 2 -->
             <div class="swiper-slide flex items-center justify-center bg-cover bg-center" style="background-image: url('{{ asset('storage/images/room1.jpg') }}');">
-    <a href="{{ route('rooms') }}" class="block w-full h-full text-white">
+    <a href="{{ route('rooms.list') }}" class="block w-full h-full text-white">
         <div class="flex flex-col items-center justify-center h-full text-center">
             <h1 class="text-5xl font-bold mb-4">Deluxe Room</h1>
             <p class="text-2xl mb-6">Experience the city view</p>
@@ -80,7 +80,7 @@
                 <div class="text-center text-white">
                     <h1 class="text-5xl font-bold mb-4">Executive Suite</h1>
                     <p class="text-2xl mb-6">Premium amenities with luxury</p>
-                    <a href="{{ route('rooms') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full">
+                    <a href="{{ route('rooms.list') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full">
                         Book Now →
                     </a>
                 </div>

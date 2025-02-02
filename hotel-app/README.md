@@ -64,3 +64,60 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+public function store(Request $request)
+    {
+       
+        // dd($request->all());
+    \Log::info('Request data:', $request->all());
+
+    $room = \App\Models\Room::find($request->room_id);
+
+    if (!$room) {
+        \Log::warning('Room not found', ['room_id' => $request->room_id]);
+        return response()->json(['success' => false, 'message' => 'Room not found'], 404);
+    }
+
+    RecentActivity::create([
+        'user_id' => Auth::id(),
+        'activity_type' => 'review',
+        'description' => 'Wrote a review for: ' . $room->room_type,
+    ]);
+    \Log::info('RecentActivity created successfully for user', [
+        'user_id' => Auth::id(),
+        'activity_type' => 'review',
+        'description' => 'Wrote a review for: ' . $room->room_type,
+    ]);
+
+    // Validate the request
+    $request->validate([
+        'review' => 'required|string|max:255',
+        'rating' => 'required|integer|min:1|max:5',
+    ]);
+    \Log::info('Request validated');
+
+    // Ensure Auth::id() is not null
+    if (!Auth::check()) {
+        return response()->json(['success' => false, 'message' => 'User not authenticated'], 401);
+    }
+
+    try {
+        // Save the review to a variable
+        $review = \App\Models\Review::create([
+            'user_id' => Auth::id(),
+            'room_id' => $request->room_id,
+            'review' => $request->review,
+            'rating' => $request->rating,
+        ]);
+        dd($review);
+
+
+        // Log the created review
+        \Log::info('Review created successfully', ['review' => $review]);
+
+        return response()->json(['success' => true, 'message' => 'Review submitted successfully']);
+    } catch (\Exception $e) {
+        \Log::error("Review submission failed: " . $e->getMessage());
+        return response()->json(['success' => false, 'message' => 'Failed to submit review'], 500);
+    }
