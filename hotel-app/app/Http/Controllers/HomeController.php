@@ -78,6 +78,8 @@ class HomeController extends Controller
                 \Log::info('Filtered by Price Range:', [
                     'price_min' => $request->price_min,
                     'price_max' => $request->price_max,
+
+                    // validation rules
                 ]);
             }
     

@@ -102,6 +102,8 @@
     <div class="flex space-x-4 mb-4">
         <input 
             type="number" 
+            max="1000"
+            min="0"
             name="price_min" 
             id="priceMin" 
             placeholder="Min Price" 
@@ -109,6 +111,8 @@
         >
         <input 
             type="number" 
+            max="5000"
+            min="0"
             name="price_max" 
             id="priceMax" 
             placeholder="Max Price" 

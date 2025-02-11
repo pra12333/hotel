@@ -116,9 +116,9 @@ Route::get('/homepage-notifications', [ReminderController::class, 'fetchHomepage
 
  //Route::get('/adminview',[AdminRoomController::class,'view'])->name('view');
 
-// Route::get('/modify-booking/{id}',[BookingController::class,'edit'])->name('booking.edit');
+Route::get('/modify-booking/{id}',[BookingController::class,'edit'])->name('booking.edit');
 
-// Route::put('/modify-booking/{id}', [BookingController::class, 'update'])->name('booking.update');
+Route::put('/modify-booking/{id}', [BookingController::class, 'update'])->name('booking.update');
 
 Route::post('/reminders/{id}/mark-as-read', [ReminderController::class, 'markAsRead'])->name('reminders.markAsRead');
 
