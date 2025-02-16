@@ -40,7 +40,7 @@
                         class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
                     <label for="remember-me" class="ml-2 block text-sm text-gray-900">Remember me</label>
                 </div>
-                <a href="#" class="text-sm text-indigo-600 hover:underline">Forgot your password?</a>
+                <a href="{{route('password.request')}}" class="text-sm text-indigo-600 hover:underline">Forgot your password?</a>
             </div>
             <button type="submit"
                 class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">

@@ -14,6 +14,7 @@ use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminRoomController;
 use App\Http\Controllers\AdminReviewController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -216,3 +217,9 @@ Route::delete('/admin/rooms/{id}', [AdminRoomController::class, 'destroy'])->nam
     
 
 });
+
+Route::get('/forgot-password',[ForgotPasswordController::class,'showForgotPasswordForm'])->name('password.request');
+Route::post('/forgot-password',[ForgotPasswordController::class,'sendResetLink'])->name('password.email');
+
+Route::get('/reset-password/{token}',[ForgotPasswordController::class,'showResetForm'])->name('password.reset');
+Route::post('/reset-password',[ForgotPasswordController::class,'resetPassword'])->name('password.update');
